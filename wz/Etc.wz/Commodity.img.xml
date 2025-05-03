@@ -75255,7 +75255,7 @@
     <int name="SN" value="30000000"/>
     <int name="ItemId" value="5050000"/>
     <int name="Count" value="1"/>
-    <int name="Price" value="3100"/>
+    <int name="Price" value="1"/>
     <int name="Period" value="90"/>
     <int name="Priority" value="11"/>
     <int name="Gender" value="2"/>

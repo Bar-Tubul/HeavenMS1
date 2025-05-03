@@ -587,10 +587,10 @@ public class MapleMonster extends AbstractLoadedMapleLife {
         
         // thanks Crypter for reporting an insufficiency on party exp bonuses
         boolean hasPartySharers = membersSize > 1;
-        float partyBonusMod = hasPartySharers ? 0.05f * membersSize : 0.0f;
+        float partyBonusMod = hasPartySharers ? 1.0f : 0.0f;
         
         for (MapleCharacter mc : expMembers) {
-            distributePlayerExperience(mc, participationExp, partyBonusMod, totalPartyLevel, mc == participationMvp, isWhiteExpGain(mc, personalRatio, sdevRatio), hasPartySharers);
+            distributePlayerExperience(mc, participationExp, partyBonusMod, mc.getLevel(), mc == participationMvp, isWhiteExpGain(mc, personalRatio, sdevRatio), hasPartySharers);
             giveFamilyRep(mc.getFamilyEntry());
         }
     }

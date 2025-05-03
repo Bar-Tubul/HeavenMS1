@@ -219,10 +219,10 @@ public class CommandsExecutor {
     private void registerLv1Commands() {
         levelCommandsCursor = new Pair<>((List<String>) new ArrayList<String>(), (List<String>) new ArrayList<String>());
         
-        addCommand("whatdropsfrom", 1, WhatDropsFromCommand.class);
-        addCommand("whodrops", 1, WhoDropsCommand.class);
+        addCommand("whatdropsfrom", 0, WhatDropsFromCommand.class);
+        addCommand("whodrops", 0, WhoDropsCommand.class);
         addCommand("buffme", 1, BuffMeCommand.class);
-        addCommand("goto", 1, GotoCommand.class);
+        addCommand("goto", 0, GotoCommand.class);
         
         commandsNameDesc.add(levelCommandsCursor);
     }
@@ -385,10 +385,10 @@ public class CommandsExecutor {
         levelCommandsCursor = new Pair<>((List<String>) new ArrayList<String>(), (List<String>) new ArrayList<String>());
         
         addCommand("setgmlevel", 6, SetGmLevelCommand.class);
-        addCommand("warpworld", 6, WarpWorldCommand.class);
+        addCommand("warpworld", 0, WarpWorldCommand.class);
         addCommand("saveall", 6, SaveAllCommand.class);
         addCommand("dcall", 6, DCAllCommand.class);
-        addCommand("mapplayers", 6, MapPlayersCommand.class);
+        addCommand("mapplayers", 0, MapPlayersCommand.class);
         addCommand("getacc", 6, GetAccCommand.class);
         addCommand("shutdown", 6, ShutdownCommand.class);
         addCommand("clearquestcache", 6, ClearQuestCacheCommand.class);

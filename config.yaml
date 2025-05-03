@@ -8,13 +8,13 @@ worlds:
     event_message: Scania!
     why_am_i_recommended: Welcome to Scania!
     channels: 3
-    exp_rate: 10
+    exp_rate: 25
     meso_rate: 10
-    drop_rate: 10
-    boss_drop_rate: 10                      #NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
+    drop_rate: 20
+    boss_drop_rate: 20                      #NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
     quest_rate: 5                           #Multiplier for Exp & Meso gains when completing a quest. Only available when USE_QUEST_RATE is true. Stacks with server Exp & Meso rates.
     fishing_rate: 10                        #Multiplier for success likelihood on meso thrown during fishing.
-    travel_rate: 10                         #Means of transportation rides/departs using 1/N of the default time.
+    travel_rate: 300                         #Means of transportation rides/departs using 1/N of the default time.
 
     #Properties for Bera 1
   - flag: 0
@@ -162,9 +162,9 @@ server:
     USE_THREAD_TRACKER: false        #[SEVERE] This deadlock auditing thing will bloat the memory as fast as the time frame one takes to lose track of a raindrop on a tempesting day. Only for debugging purposes.
 
     #Database Configuration
-    DB_URL: "jdbc:mysql://localhost:3306/heavenms"
+    DB_URL: "jdbc:mysql://localhost:3306/heavenms?characterEncoding=latin1"
     DB_USER: "root"
-    DB_PASS: ""
+    DB_PASS: "123456"
     DB_CONNECTION_POOL: true        #Installs a connection pool to hub DB connections. Set false to default.
 
     #Login Configuration
@@ -189,7 +189,7 @@ server:
     AUTOMATIC_REGISTER: true        #Automatically register players when they login with a nonexistent username.
     BCRYPT_MIGRATION: true          #Performs a migration from old SHA-1 and SHA-512 password to bcrypt.
     COLLECTIVE_CHARSLOT: false      #Available character slots are contabilized globally rather than per world server.
-    DETERRED_MULTICLIENT: false     #Enables detection of multi-client and suspicious remote IP on the login system.
+    DETERRED_MULTICLIENT: true     #Enables detection of multi-client and suspicious remote IP on the login system.
     #Besides blocking logging in with several client sessions on the same machine, this also blocks suspicious login attempts for players that tries to login on an account using several diferent remote addresses.
 
     #Multiclient Coordinator Configuration
@@ -198,8 +198,8 @@ server:
     LOGIN_ATTEMPT_DURATION: 120         #Period in seconds the login attempt remains registered on the system.
 
     #Ip Configuration
-    HOST: 127.0.0.1
-    LOCALSERVER: true
+    HOST: 62.171.146.210
+    LOCALSERVER: false
     GMSERVER: false
 
     #Other configuration
@@ -220,7 +220,7 @@ server:
     USE_MAXRANGE_ECHO_OF_HERO: true
     USE_MTS: false
     USE_CPQ: true                       #Renders the CPQ available or not.
-    USE_AUTOHIDE_GM: true              #When enabled, GMs are automatically hidden when joining. Thanks to Steven Deblois (steven1152).
+    USE_AUTOHIDE_GM: false              #When enabled, GMs are automatically hidden when joining. Thanks to Steven Deblois (steven1152).
     USE_BUYBACK_SYSTEM: false            #Enables the HeavenMS-builtin buyback system, to be used by dead players when clicking the MTS button.
     USE_FIXED_RATIO_HPMP_UPDATE: false   #Enables the HeavenMS-builtin HPMP update based on the current pool to max pool ratio.
     USE_FAMILY_SYSTEM: true
@@ -230,20 +230,20 @@ server:
     USE_ITEM_SORT: true                 #Enables inventory "Item Sort/Merge" feature.
     USE_ITEM_SORT_BY_NAME: false        #Item sorting based on name rather than id.
     USE_PARTY_FOR_STARTERS: false        #Players level 10 or below can create/invite other players on the given level range.
-    USE_AUTOASSIGN_STARTERS_AP: true   #Beginners level 10 or below have their AP autoassigned (they can't choose to levelup a stat). Set true ONLY if the localhost doesn't support AP assigning for beginners level 10 or below.
+    USE_AUTOASSIGN_STARTERS_AP: false   #Beginners level 10 or below have their AP autoassigned (they can't choose to levelup a stat). Set true ONLY if the localhost doesn't support AP assigning for beginners level 10 or below.
     USE_AUTOASSIGN_SECONDARY_CAP: true  #Prevents AP autoassign from spending on secondary stats after the player class' cap (defined on the autoassign handler) has been reached.
-    USE_STARTING_AP_4: false             #Use early-GMS 4/4/4/4 starting stats. To overcome AP shortage, this gives 4AP/5AP at 1st/2nd job advancements.
+    USE_STARTING_AP_4: true             #Use early-GMS 4/4/4/4 starting stats. To overcome AP shortage, this gives 4AP/5AP at 1st/2nd job advancements.
     USE_AUTOBAN: false                  #Commands the server to detect infractors automatically.
-    USE_AUTOBAN_LOG: true               #Log autoban related messages. Still logs even with USE_AUTOBAN disabled.
+    USE_AUTOBAN_LOG: true                #Log autoban related messages. Still logs even with USE_AUTOBAN disabled.
     USE_AUTOSAVE: true                  #Enables server autosaving feature (saves characters to DB each 1 hour).
     USE_SERVER_AUTOASSIGNER: false       #HeavenMS-builtin autoassigner, uses algorithm based on distributing AP accordingly with required secondary stat on equipments.
     USE_REFRESH_RANK_MOVE: true
     USE_ENFORCE_ADMIN_ACCOUNT: false    #Forces accounts having GM characters to be treated as a "GM account" by the client (localhost). Some of the GM account perks is the ability to FLY, but unable to TRADE.
     USE_ENFORCE_NOVICE_EXPRATE: false    #Hardsets experience rate 1x for beginners level 10 or under. Ideal for roaming on novice areas without caring too much about losing some stats.
-    USE_ENFORCE_HPMP_SWAP: false        #Forces players to reuse stats (via AP Resetting) located on HP/MP pool only inside the HP/MP stats.
+    USE_ENFORCE_HPMP_SWAP: true        #Forces players to reuse stats (via AP Resetting) located on HP/MP pool only inside the HP/MP stats.
     USE_ENFORCE_MOB_LEVEL_RANGE: true   #Players N levels below the killed mob will gain no experience from defeating it.
     USE_ENFORCE_JOB_LEVEL_RANGE: false  #Caps the player level on the minimum required to advance their current jobs.
-    USE_ENFORCE_JOB_SP_RANGE: false     #Caps the player SP level on the total obtainable by their current jobs. After changing jobs, missing SP will be retrieved.
+    USE_ENFORCE_JOB_SP_RANGE: true     #Caps the player SP level on the total obtainable by their current jobs. After changing jobs, missing SP will be retrieved.
     USE_ENFORCE_ITEM_SUGGESTION: false  #Forces the Owl of Minerva and the Cash Shop to always display the defined item array instead of those featured by the players.
     USE_ENFORCE_UNMERCHABLE_CASH: true  #Forces players to not sell CASH items via merchants, drops of it disappears.
     USE_ENFORCE_UNMERCHABLE_PET: true   #Forces players to not sell pets via merchants, drops of it disappears. (since non-named pets gets dirty name and other possible DB-related issues)
@@ -261,7 +261,7 @@ server:
     USE_BANISHABLE_TOWN_SCROLL: false    #Enables town scrolls to act as if it's a "player banish", rendering the antibanish scroll effect available.
     USE_ENABLE_FULL_RESPAWN: false       #At respawn task, always respawn missing mobs when they're available. Spawn count doesn't depend on how many players are currently there.
     USE_ENABLE_CHAT_LOG: false          #Write in-game chat to log
-    USE_REBIRTH_SYSTEM: false           #Flag to enable/disable rebirth system
+    USE_REBIRTH_SYSTEM: true          #Flag to enable/disable rebirth system
     USE_MAP_OWNERSHIP_SYSTEM: false      #Flag to enable/disable map ownership system
     USE_FISHING_SYSTEM: false            #Flag to enable/disable custom fishing system
     USE_NPCS_SCRIPTABLE: true           #Flag to enable/disable serverside predefined script NPCs.
@@ -298,7 +298,7 @@ server:
     PQ_BONUS_EXP_RATE: 0.5               #Rate for the PQ exp reward.
 
     EXP_SPLIT_LEVEL_INTERVAL: 5            #Non-contributing players must be within N level between the mob to receive EXP.
-    EXP_SPLIT_LEECH_INTERVAL: 5            #Non-contributing players must be within N level between any contributing party member to receive EXP.
+    EXP_SPLIT_LEECH_INTERVAL: 15            #Non-contributing players must be within N level between any contributing party member to receive EXP.
     EXP_SPLIT_MVP_MOD: 0.2
     EXP_SPLIT_COMMON_MOD: 0.8
     PARTY_BONUS_EXP_RATE: 1.0            #Rate for the party exp bonus reward.
@@ -339,7 +339,7 @@ server:
 
     #Some Gameplay Enhancing Configurations
     #Scroll Configuration
-    USE_PERFECT_GM_SCROLL: true     #Scrolls from GMs never uses up slots nor fails.
+    USE_PERFECT_GM_SCROLL: false     #Scrolls from GMs never uses up slots nor fails.
     USE_PERFECT_SCROLLING: false     #Scrolls doesn't use slots upon failure.
     USE_ENHANCED_CHSCROLL: false     #Equips even more powerful with chaos upgrade.
     USE_ENHANCED_CRAFTING: false     #Apply chaos scroll on every equip crafted.
@@ -367,7 +367,7 @@ server:
     USE_PERFECT_PITCH: false         #For lvl 30 or above, each lvlup grants player 1 perfect pitch.
 
     #Quest Configuration
-    USE_QUEST_RATE: false           #Exp/Meso gained by quests uses fixed server exp/meso rate times quest rate as multiplier, instead of player rates.
+    USE_QUEST_RATE: true           #Exp/Meso gained by quests uses fixed server exp/meso rate times quest rate as multiplier, instead of player rates.
 
     #Quest Points Configuration
     QUEST_POINT_REPEATABLE_INTERVAL: 25  #Minimum interval between repeatable quest completions for quest points to be awarded.
@@ -423,7 +423,7 @@ server:
     MOUNT_EXHAUST_COUNT: 1             #Number of proc counts (1 per minute) on the exhaust schedule for tiredness.
 
     #Pet Hunger Configuration
-    PETS_NEVER_HUNGRY: false        #If true, pets and mounts will never grow hungry.
+    PETS_NEVER_HUNGRY: true        #If true, pets and mounts will never grow hungry.
     GM_PETS_NEVER_HUNGRY: true      #If true, pets and mounts owned by GMs will never grow hungry.
 
     #Event Configuration

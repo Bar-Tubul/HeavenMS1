@@ -152,7 +152,7 @@ public class MapleSessionCoordinator {
             Connection con = DatabaseConnection.getConnection();
             int hwidCount = 0;
             
-            try (PreparedStatement ps = con.prepareStatement("SELECT SQL_CACHE hwid FROM hwidaccounts WHERE accountid = ?")) {
+            try (PreparedStatement ps = con.prepareStatement("SELECT hwid FROM hwidaccounts WHERE accountid = ?")) {
                 ps.setInt(1, accountId);
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
@@ -184,7 +184,7 @@ public class MapleSessionCoordinator {
             Connection con = DatabaseConnection.getConnection();
             int hwidCount = 0;
 
-            try (PreparedStatement ps = con.prepareStatement("SELECT SQL_CACHE * FROM hwidaccounts WHERE accountid = ?")) {
+            try (PreparedStatement ps = con.prepareStatement("SELECT * FROM hwidaccounts WHERE accountid = ?")) {
                 ps.setInt(1, accountId);
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {

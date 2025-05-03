@@ -221,7 +221,7 @@ public class CommandsExecutor {
         
         addCommand("whatdropsfrom", 0, WhatDropsFromCommand.class);
         addCommand("whodrops", 0, WhoDropsCommand.class);
-        addCommand("buffme", 1, BuffMeCommand.class);
+        addCommand("buffme", 0, BuffMeCommand.class);
         addCommand("goto", 0, GotoCommand.class);
         
         commandsNameDesc.add(levelCommandsCursor);

@@ -8,11 +8,11 @@ worlds:
     event_message: Scania!
     why_am_i_recommended: Welcome to Scania!
     channels: 3
-    exp_rate: 25
+    exp_rate: 50
     meso_rate: 10
     drop_rate: 20
     boss_drop_rate: 20                      #NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
-    quest_rate: 5                           #Multiplier for Exp & Meso gains when completing a quest. Only available when USE_QUEST_RATE is true. Stacks with server Exp & Meso rates.
+    quest_rate: 1                           #Multiplier for Exp & Meso gains when completing a quest. Only available when USE_QUEST_RATE is true. Stacks with server Exp & Meso rates.
     fishing_rate: 10                        #Multiplier for success likelihood on meso thrown during fishing.
     travel_rate: 300                         #Means of transportation rides/departs using 1/N of the default time.
 
@@ -367,7 +367,7 @@ server:
     USE_PERFECT_PITCH: false         #For lvl 30 or above, each lvlup grants player 1 perfect pitch.
 
     #Quest Configuration
-    USE_QUEST_RATE: true           #Exp/Meso gained by quests uses fixed server exp/meso rate times quest rate as multiplier, instead of player rates.
+    USE_QUEST_RATE: false           #Exp/Meso gained by quests uses fixed server exp/meso rate times quest rate as multiplier, instead of player rates.
 
     #Quest Points Configuration
     QUEST_POINT_REPEATABLE_INTERVAL: 25  #Minimum interval between repeatable quest completions for quest points to be awarded.
@@ -413,7 +413,7 @@ server:
     PLAYERNPC_AUTODEPLOY: true      #Makes PlayerNPC automatically deployed on the Hall of Fame at the instant one reaches max level. If false, eligible players must talk to 1st job instructor to deploy a NPC.
 
     #Pet Auto-Pot Configuration
-    USE_COMPULSORY_AUTOPOT: true    #Pets will consume as many potions as needed to fulfill the AUTOHP/MP ratio threshold.
+    USE_COMPULSORY_AUTOPOT: false    #Pets will consume as many potions as needed to fulfill the AUTOHP/MP ratio threshold.
     USE_EQUIPS_ON_AUTOPOT: true     #Player MaxHP and MaxMP check values on autopot handler will be updated by the HP/MP bonuses on equipped items.
     PET_AUTOHP_RATIO: 0.99          #Will automatically consume potions until given ratio of the MaxHP/MaxMP is reached.
     PET_AUTOMP_RATIO: 0.99

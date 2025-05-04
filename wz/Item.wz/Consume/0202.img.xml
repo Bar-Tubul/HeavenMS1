@@ -2830,7 +2830,7 @@
         <vector name="origin" x="-1" y="32"/>
       </canvas>
       <int name="price" value="1"/>
-      <int name="slotMax" value="1"/>
+      <int name="slotMax" value="99"/>
     </imgdir>
     <imgdir name="spec">
       <int name="speed" value="40"/>

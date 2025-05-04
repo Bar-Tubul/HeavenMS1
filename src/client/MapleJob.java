@@ -58,17 +58,17 @@ public enum MapleJob {
 
     LEGEND(2000), EVAN(2001),
     ARAN1(2100), ARAN2(2110), ARAN3(2111), ARAN4(2112),
-	
+
     EVAN1(2200), EVAN2(2210), EVAN3(2211), EVAN4(2212), EVAN5(2213), EVAN6(2214),
     EVAN7(2215), EVAN8(2216), EVAN9(2217), EVAN10(2218);
 
     final int jobid;
-    final static int maxId = 22;    // maxId = (EVAN / 100);
-    
+    final static int maxId = 22; // maxId = (EVAN / 100);
+
     private MapleJob(int id) {
         jobid = id;
     }
-    
+
     public static int getMax() {
         return maxId;
     }
@@ -114,22 +114,23 @@ public enum MapleJob {
                 return BEGINNER;
         }
     }
-    
-    public boolean isA(MapleJob basejob) {  // thanks Steve (kaito1410) for pointing out an improvement here
+
+    public boolean isA(MapleJob basejob) { // thanks Steve (kaito1410) for pointing out an improvement here
         int basebranch = basejob.getId() / 10;
-        return (getId() / 10 == basebranch && getId() >= basejob.getId()) || (basebranch % 10 == 0 && getId() / 100 == basejob.getId() / 100);
+        return (getId() / 10 == basebranch && getId() >= basejob.getId())
+                || (basebranch % 10 == 0 && getId() / 100 == basejob.getId() / 100);
     }
-    
+
     public int getJobNiche() {
         return (jobid / 100) % 10;
-        
+
         /*
-        case 0: BEGINNER;
-        case 1: WARRIOR;
-        case 2: MAGICIAN;
-        case 3: BOWMAN;  
-        case 4: THIEF;
-        case 5: PIRATE;
-        */
+         * case 0: BEGINNER;
+         * case 1: WARRIOR;
+         * case 2: MAGICIAN;
+         * case 3: BOWMAN;
+         * case 4: THIEF;
+         * case 5: PIRATE;
+         */
     }
 }

@@ -25,7 +25,7 @@ pipeline {
 
         stage('Restart Server') {
             steps {
-                // Optional: kill previous server if running
+                // Optional: kill previous server if running (test)
                 bat '''
                 for /f "tokens=2 delims=," %%a in ('tasklist /FI "IMAGENAME eq java.exe" /FO CSV ^| findstr "net.server.Server"') do taskkill /PID %%a /F
                 timeout /t 2

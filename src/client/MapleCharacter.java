@@ -498,10 +498,10 @@ public class MapleCharacter extends AbstractMapleCharacterObject {
         }
 
         // to fix the map 0 lol
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 100; i++) {
             ret.trockmaps.add(999999999);
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             ret.viptrockmaps.add(999999999);
         }
 
@@ -7473,7 +7473,7 @@ public class MapleCharacter extends AbstractMapleCharacterObject {
             }
             rs.close();
             ps.close();
-            ps = con.prepareStatement("SELECT mapid,vip FROM trocklocations WHERE characterid = ? LIMIT 15");
+            ps = con.prepareStatement("SELECT mapid,vip FROM trocklocations WHERE characterid = ? LIMIT 100");
             ps.setInt(1, charid);
             rs = ps.executeQuery();
             byte v = 0;
@@ -7487,11 +7487,11 @@ public class MapleCharacter extends AbstractMapleCharacterObject {
                     r++;
                 }
             }
-            while (v < 10) {
+            while (v < 100) {
                 ret.viptrockmaps.add(999999999);
                 v++;
             }
-            while (r < 5) {
+            while (r < 100) {
                 ret.trockmaps.add(999999999);
                 r++;
             }

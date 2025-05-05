@@ -75442,8 +75442,8 @@
   <imgdir name="7368">
     <int name="SN" value="30000018"/>
     <int name="ItemId" value="5450000"/>
-    <int name="Count" value="5"/>
-    <int name="Price" value="2800"/>
+    <int name="Count" value="99"/>
+    <int name="Price" value="1"/>
     <int name="Period" value="90"/>
     <int name="Priority" value="5"/>
     <int name="Gender" value="2"/>

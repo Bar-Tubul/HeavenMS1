@@ -109,7 +109,7 @@ public class GotoCommand extends Command {
         }
 
         HashMap<String, Integer> gotomaps;
-        if (player.isGM()) {
+        if (true/* || player.isGM() ()*/) {
             gotomaps = new HashMap<>(GameConstants.GOTO_AREAS);     // distinct map registry for GM/users suggested thanks to Vcoc
             gotomaps.putAll(GameConstants.GOTO_TOWNS);  // thanks Halcyon (UltimateMors) for pointing out duplicates on listed entries functionality
         } else {
@@ -126,7 +126,7 @@ public class GotoCommand extends Command {
         } else {
             // detailed info on goto available areas suggested thanks to Vcoc
             String sendStr = "Area '#r" + params[0] + "#k' is not available. Available areas:\r\n\r\n#rTowns:#k" + GOTO_TOWNS_INFO;
-            if (player.isGM()) {
+            if (true /*player.isGM()*/) {
                 sendStr += ("\r\n#rAreas:#k\r\n" + GOTO_AREAS_INFO);
             }
             

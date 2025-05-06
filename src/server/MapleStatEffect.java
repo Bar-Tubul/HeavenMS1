@@ -966,9 +966,12 @@ public class MapleStatEffect {
          AutobanFactory.MPCON.addPoint(applyfrom.getAutobanManager(), "mpCon hack for skill:" + sourceid + "; Player MP: " + applyto.getMp() + " MP Needed: " + getMpCon());
          } */
 
-        if (!applyto.applyHpMpChange(hpCon, hpchange, mpchange)) {
-            applyto.announce(MaplePacketCreator.enableActions());
-            return false;
+        // Only apply HP/MP change if this is a heal or the buff actually changes HP/MP
+        if (!(hpchange == 0 && mpchange == 0 && !isHeal())) {
+            if (!applyto.applyHpMpChange(hpCon, hpchange, mpchange)) {
+                applyto.announce(MaplePacketCreator.enableActions());
+                return false;
+            }
         }
 
         if (moveTo != -1) {

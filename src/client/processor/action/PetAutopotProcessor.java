@@ -144,26 +144,7 @@ public class PetAutopotProcessor {
                             qtyCount = 0;
                         }
                     } else {
-                            // use hp / mana pots based on user's config
-                        float autohpAlert = chr.getAutopotHpAlert();
-                        float autompAlert = chr.getAutopotMpAlert();
-                        if (hasHpGain) {
-                            double hpRatio = (autohpAlert * maxHp) - curHp;
-                            if (hpRatio > 0.0) {
-                                qtyCount = (int) Math.ceil(hpRatio / incHp);
-                            }
-                        }
-
-                        if (hasMpGain) {
-                            double mpRatio = ((autompAlert * maxMp) - curMp);
-                            if (mpRatio > 0.0) {
-                                qtyCount = Math.max(qtyCount, (int) Math.ceil(mpRatio / incMp));
-                            }
-                        }
-
-                        if (qtyCount < 0) {
-                            qtyCount = 0;
-                        }
+                        qtyCount = 1;   // non-compulsory autopot concept thanks to marcuswoon
                     }
 
                     while (true) {

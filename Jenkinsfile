@@ -2,39 +2,38 @@ pipeline {
     agent any
 
     environment {
-        JAVA_HOME = 'C:\\Program Files\\Java\\jdk1.8.0_211'
+        // Adjust JAVA_HOME if IntelliJ’s embedded JDK isn't available outside the IDE
+        JAVA_HOME = 'C:\\Program Files\\Java\\jdk1.8.0_452'
         PATH = "${env.JAVA_HOME}\\bin;${env.PATH}"
+        WORK_DIR = 'C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1'
+        BUILD_DIR = "${WORK_DIR}\\out"
+        SRC_DIR = "${WORK_DIR}\\src"
     }
 
     stages {
-        stage('Clean Old Classes') {
+        stage('Clean Previous Build') {
             steps {
-                bat 'rd /s /q out\\production\\HeavenMS || exit 0'
+                dir("${BUILD_DIR}") {
+                    deleteDir()
+                }
             }
         }
 
         stage('Compile') {
             steps {
-                bat '''
-                cd C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1
-                dir /s /b src\\*.java > sources.txt
-                javac -d out\\production\\HeavenMS @sources.txt
-                '''
+                dir("${WORK_DIR}") {
+                    bat "mkdir out"
+                    bat "javac -d out -cp . src\\net\\server\\Server.java"
+                }
             }
         }
 
-        stage('Restart Server') {
+        stage('Run Server') {
             steps {
-                // Optional: kill previous server if running (test)
-                bat '''
-                for /f "tokens=2 delims=," %%a in ('tasklist /FI "IMAGENAME eq java.exe" /FO CSV ^| findstr "net.server.Server"') do taskkill /PID %%a /F
-                timeout /t 2
-                '''
-
-                bat '''
-                cd C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1
-                start "" java -Xmx2048m -cp out\\production\\HeavenMS -Dwzpath=wz\\ net.server.Server
-                '''
+                dir("${WORK_DIR}") {
+                    // Non-blocking start, runs server in background like IntelliJ
+                    bat 'start /b java -cp HeavenMS net.server.Server'
+                }
             }
         }
     }

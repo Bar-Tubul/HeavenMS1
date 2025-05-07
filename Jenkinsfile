@@ -2,29 +2,20 @@ pipeline {
     agent any
 
     environment {
-        JAVA_HOME = 'C:\\Program Files\\Java\\jdk1.8.0_452'
-        PATH = "${JAVA_HOME}\\bin;${PATH}"
-        WORK_DIR = 'C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1'
-        BUILD_DIR = "${WORK_DIR}\\out"
-        MAIN_CLASS = "net.server.Server"
-        CLASSPATH = "out"  // We'll compile and run from this
+        PROJECT_DIR = 'C:/Users/Administrator/IdeaProjects/HeavenMS1'
+        JAVA_PATH = 'C:/Users/Administrator/Downloads/openlogic-openjdk-8u452-b09-windows-x64/openlogic-openjdk-8u452-b09-windows-x64/bin/java.exe'
     }
 
     stages {
-
         stage('Stop Existing Server') {
             steps {
                 powershell '''
-                $javaProcs = Get-CimInstance Win32_Process -Filter "Name = 'java.exe'" |
-                    Where-Object { $_.CommandLine -match 'net\\.server\\.Server' }
-
-                if ($javaProcs.Count -eq 0) {
-                    Write-Host "No server process found running net.server.Server. Continuing..."
-                } else {
-                    foreach ($proc in $javaProcs) {
-                        Write-Host "Killing Java process ID $($proc.ProcessId) running: $($proc.CommandLine)"
-                        Stop-Process -Id $proc.ProcessId -Force
-                    }
+                $javaProcesses = Get-WmiObject Win32_Process | Where-Object {
+                    $_.CommandLine -like "*net.server.Server*" -and $_.ExecutablePath -eq "$env:JAVA_PATH"
+                }
+                foreach ($proc in $javaProcesses) {
+                    Write-Host "Killing Java process ID $($proc.ProcessId)"
+                    Stop-Process -Id $proc.ProcessId -Force
                 }
                 '''
             }
@@ -32,28 +23,44 @@ pipeline {
 
         stage('Clean Previous Build') {
             steps {
-                script {
-                    def buildDir = "${BUILD_DIR.replaceAll('\\\\', '/')}"
-                    bat "if exist ${buildDir} rmdir /s /q ${buildDir}"
-                }
+                bat '''
+                if exist "C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1\\out" (
+                    rmdir /s /q "C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1\\out"
+                )
+                '''
             }
         }
 
         stage('Compile') {
             steps {
-                dir("${WORK_DIR}") {
-                    bat "mkdir out"
-                    bat "javac -d out -cp . src\\net\\server\\Server.java"
-                }
+                bat '''
+                cd "C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1"
+                call gradlew.bat build
+                '''
+                // Replace with actual compile command if not using Gradle
             }
         }
 
         stage('Start Server') {
             steps {
-                dir("${WORK_DIR}") {
-                    bat "start \"HeavenMS Server\" /b java -cp ${CLASSPATH} ${MAIN_CLASS}"
-                }
+                powershell '''
+                Start-Process -NoNewWindow -FilePath "$env:JAVA_PATH" -ArgumentList @(
+                    "-classpath",
+                    "$env:PROJECT_DIR\\out\\production\\HeavenMS;other\\needed\\libs",
+                    "net.server.Server"
+                )
+                '''
+                // Add any necessary libraries to classpath
             }
+        }
+    }
+
+    post {
+        failure {
+            echo 'Build failed.'
+        }
+        success {
+            echo 'Build and server start succeeded.'
         }
     }
 }

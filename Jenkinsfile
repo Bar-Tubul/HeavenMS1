@@ -3,30 +3,38 @@ pipeline {
 
     environment {
         JAVA_HOME = 'C:\\Program Files\\Java\\jdk1.8.0_452'
-        PATH = "${env.JAVA_HOME}\\bin;${env.PATH}"
+        PATH = "${JAVA_HOME}\\bin;${PATH}"
         WORK_DIR = 'C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1'
         BUILD_DIR = "${WORK_DIR}\\out"
         MAIN_CLASS = "net.server.Server"
+        CLASSPATH = "out"  // We'll compile and run from this
     }
 
     stages {
+
         stage('Stop Existing Server') {
             steps {
-                script {
-                    bat """
-                    for /f "tokens=2" %%i in ('tasklist /fi "imagename eq java.exe" /v ^| findstr /i "%MAIN_CLASS%"') do (
-                        echo Killing process ID %%i running %MAIN_CLASS%
-                        taskkill /PID %%i /F
-                    )
-                    """
+                powershell '''
+                $javaProcs = Get-CimInstance Win32_Process -Filter "Name = 'java.exe'" |
+                    Where-Object { $_.CommandLine -match 'net\\.server\\.Server' }
+
+                if ($javaProcs.Count -eq 0) {
+                    Write-Host "No server process found running net.server.Server. Continuing..."
+                } else {
+                    foreach ($proc in $javaProcs) {
+                        Write-Host "Killing Java process ID $($proc.ProcessId) running: $($proc.CommandLine)"
+                        Stop-Process -Id $proc.ProcessId -Force
+                    }
                 }
+                '''
             }
         }
 
         stage('Clean Previous Build') {
             steps {
-                dir("${BUILD_DIR}") {
-                    deleteDir()
+                script {
+                    def buildDir = "${BUILD_DIR.replaceAll('\\\\', '/')}"
+                    bat "if exist ${buildDir} rmdir /s /q ${buildDir}"
                 }
             }
         }
@@ -43,7 +51,7 @@ pipeline {
         stage('Start Server') {
             steps {
                 dir("${WORK_DIR}") {
-                    bat 'start /b java -cp HeavenMS net.server.Server'
+                    bat "start \"HeavenMS Server\" /b java -cp ${CLASSPATH} ${MAIN_CLASS}"
                 }
             }
         }

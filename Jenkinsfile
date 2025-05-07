@@ -23,21 +23,22 @@ pipeline {
 
         stage('Clean Previous Build') {
             steps {
-                bat '''
-                if exist "C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1\\out" (
-                    rmdir /s /q "C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1\\out"
-                )
-                '''
+                echo 'Skipping cleanup of out directory, building directly...'
+                // If you want to clean the out directory, you can enable the line below
+                // bat 'rmdir /s /q "C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1\\out"'
             }
         }
 
         stage('Compile') {
             steps {
-                bat '''
-                cd "C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1"
-                call gradlew.bat build
-                '''
-                // Replace with actual compile command if not using Gradle
+                script {
+                    // Example: If you have a custom batch file to compile the project
+                    echo 'Building the project with custom command...'
+                    bat '''
+                    cd "C:\\Users\\Administrator\\IdeaProjects\\HeavenMS1"
+                    call build.bat  // Replace with your actual build command or script
+                    '''
+                }
             }
         }
 
